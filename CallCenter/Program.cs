@@ -28,6 +28,7 @@ builder.Services.AddSwaggerGen(options =>
         Type = SecuritySchemeType.ApiKey
     });
 
+
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
@@ -44,9 +45,9 @@ builder.Services.AddAuthentication(e =>
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("veryverysecret.....")),
         ValidateAudience = false,
-        ValidateIssuer = false
+        ValidateIssuer = false,
         //muốn test nhanh thời gian hết hạn token dùng ClockSkew
-        //ClockSkew = TimeSpan.Zero
+        ClockSkew = TimeSpan.FromSeconds(10)
     };
 });
 

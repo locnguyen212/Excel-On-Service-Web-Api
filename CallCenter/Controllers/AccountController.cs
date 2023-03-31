@@ -245,18 +245,63 @@ namespace CallCenter.Controllers
                     if (account.Status == true)
                     {
                         account.Token = CreateJwt(account);
-                        var a = await _accountService.Update(account);
+                        account.RefreshToken = CreateToken("refresh");
+                        account.RefreshTokenExpireTime = DateTime.Now;
+                        var result = await _accountService.Update(account);
                         return Ok(new
                         {
-                            Result = a,
+                            Result = result,
                             Id = account.Id,
                             Email = account.Email,
-                            Token = account.Token
+                            Token = account.Token,
+                            RefreshToken = account.RefreshToken
                         });
                     }
 
                 }
                 return BadRequest("Incorrect login information");
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("refresh"), AllowAnonymous]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> Refresh([FromBody] TokenModel tokenModel)
+        {
+            try
+            {
+                if(tokenModel == null)
+                {
+                    return BadRequest();
+                }
+                string token = tokenModel.Token;
+                string refreshToken = tokenModel.RefreshToken;
+                var principal = GetPrincipalFromExpiredToken(token);
+                var email = principal.Identity.Name;
+                var account = await _accountService.FindByEmailController(email);
+
+                if(account == null || account.RefreshToken != refreshToken || account.RefreshTokenExpireTime.Value.AddDays(1) < DateTime.Now)
+                {
+                    return BadRequest();
+                }
+
+                var newToken = CreateJwt(account);
+                var newRefreshToken = CreateToken("refresh");
+
+                account.Token = newToken;
+                account.RefreshToken = newRefreshToken;
+                account.RefreshTokenExpireTime = DateTime.Now;
+
+                return Ok(new
+                {
+                    Result = await _accountService.Update(account),
+                    Token = newToken,
+                    refreshToken = newRefreshToken
+                });
             }
             catch
             {
@@ -408,6 +453,7 @@ namespace CallCenter.Controllers
             //tạo payload
             var identity = new ClaimsIdentity(new Claim[]
             {
+                new Claim(ClaimTypes.Name, account.Email),
                 new Claim(ClaimTypes.Email, account.Email),
                 new Claim(ClaimTypes.Role, account.Role)
             });
@@ -419,7 +465,7 @@ namespace CallCenter.Controllers
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = identity,
-                Expires = DateTime.Now.AddDays(1),
+                Expires = DateTime.Now.AddSeconds(10),
                 SigningCredentials = credentials
             };
 
@@ -429,5 +475,26 @@ namespace CallCenter.Controllers
             return jwtTokenHandler.WriteToken(token);
         }
 
+        private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+        {
+            var tokenValidationParameter = new TokenValidationParameters
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("veryverysecret.....")),
+                ValidateLifetime = false
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken securityToken;
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameter, out securityToken);
+            var jwtSecurityToken = securityToken as JwtSecurityToken;
+            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new SecurityTokenException("Invalid token");
+            }
+            return principal;
+        }
     }
 }
