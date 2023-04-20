@@ -70,8 +70,8 @@ namespace CallCenter.ServicesImpl
                 Name = e.Name,
                 Price = e.Price,
                 Description = e.Description,
-                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
-                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
+                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
+                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
             }).ToListAsync();
         }
 
@@ -83,8 +83,8 @@ namespace CallCenter.ServicesImpl
                 Name = e.Name,
                 Price = e.Price,
                 Description = e.Description,
-                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
-                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
+                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
+                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
             }).FirstOrDefaultAsync();
         }
     }

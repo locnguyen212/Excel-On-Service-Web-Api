@@ -4194,11 +4194,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\LENOVO\\Desktop\\aptech\\HK3\\asp dot net\\demo_session_2\\CallCenter\\CallCenter.csproj",
+      "projectUniqueName": "D:\\aptech\\HK3\\asp dot net\\demo_session_2\\CallCenter\\CallCenter.csproj",
       "projectName": "CallCenter",
-      "projectPath": "C:\\Users\\LENOVO\\Desktop\\aptech\\HK3\\asp dot net\\demo_session_2\\CallCenter\\CallCenter.csproj",
+      "projectPath": "D:\\aptech\\HK3\\asp dot net\\demo_session_2\\CallCenter\\CallCenter.csproj",
       "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\LENOVO\\Desktop\\aptech\\HK3\\asp dot net\\demo_session_2\\CallCenter\\obj\\",
+      "outputPath": "D:\\aptech\\HK3\\asp dot net\\demo_session_2\\CallCenter\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RfMTykSBiRONQw/TiDXbxEzlxBh0FZq7J2xEBlQdLVRNw1SRhb56MwXOoJpY0E7CFe/PgOLwoeN21fgGkvLgFA==",
+  "dgSpecHash": "zLbUUglY563lRwz3TjbIWZD4lQ86d/YgluJjvgIhjQhXxe+Uf/pbFcinL0OOmX8QG+mRybjXjcinHIxR7AxZIQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\LENOVO\\Desktop\\aptech\\HK3\\asp dot net\\demo_session_2\\CallCenter\\CallCenter.csproj",
+  "projectFilePath": "D:\\aptech\\HK3\\asp dot net\\demo_session_2\\CallCenter\\CallCenter.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\LENOVO\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\LENOVO\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

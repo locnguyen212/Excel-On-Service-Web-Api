@@ -82,8 +82,8 @@ namespace CallCenter.ServicesImpl
                 Phone = e.Phone,
                 Role = e.Role,
                 Status = e.Status,
-                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
-                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
+                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
+                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
                 DepartmentId = e.DepartmentId,
                 DepartmentName = e.DepartmentId != null? e.Department.Name : null
             }).ToListAsync();
@@ -100,8 +100,8 @@ namespace CallCenter.ServicesImpl
                 Phone = e.Phone,
                 Role = e.Role,
                 Status = e.Status,
-                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
-                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
+                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
+                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
                 DepartmentId = e.DepartmentId,
                 DepartmentName = e.Department.Name
             }).FirstOrDefaultAsync();
@@ -118,8 +118,8 @@ namespace CallCenter.ServicesImpl
                 Phone = e.Phone,
                 Role = e.Role,
                 Status = e.Status,
-                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
-                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
+                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
+                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
                 DepartmentId = e.DepartmentId,
                 DepartmentName = e.Department.Name
             }).ToListAsync();
@@ -136,8 +136,8 @@ namespace CallCenter.ServicesImpl
                 Phone = e.Phone,
                 Role = e.Role,
                 Status = e.Status,
-                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
-                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
+                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
+                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
                 DepartmentId = e.DepartmentId,
                 DepartmentName = e.Department.Name
             }).ToListAsync();

@@ -1,5 +1,6 @@
 ﻿using CallCenter.Models;
 using CallCenter.Services;
+using CallCenter.Utils.Helpers;
 using CallCenter.Utils.UtilModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -9,18 +10,23 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Security.Principal;
 using System.Text;
 
 namespace CallCenter.Controllers
 {
     [Route("api/account")]
-    [Authorize(Roles = "super admin, admin 1, admin 2")]
+    //[Authorize(Roles = "super admin, admin 1, admin 2")]
     public class AccountController : Controller
     {
         private IAccountService _accountService;
-        public AccountController(IAccountService accountService)
+        private ISendEmailService _sendEmailService;
+        private IConfiguration _configuration;
+        public AccountController(IAccountService accountService, ISendEmailService sendEmailService, IConfiguration configuration)
         {
             _accountService = accountService;
+            _sendEmailService = sendEmailService;
+            _configuration = configuration;
         }
 
         [HttpGet("find-all")]
@@ -28,7 +34,7 @@ namespace CallCenter.Controllers
         public async Task<IActionResult> FindAll()
         {
             try
-            {
+            {               
                 //Console.WriteLine("ID: " + Request.Headers["id"]);
                 return Ok(await _accountService.FindAll());
             }
@@ -103,11 +109,7 @@ namespace CallCenter.Controllers
 
                     if (await _accountService.IsEmailExist(acc.Email))
                     {
-                        return Ok(new
-                        {
-                            Result = false,
-                            Content = "Email is already existed."
-                        });
+                        return BadRequest("Email is already existed.");
                     }
 
                     acc.Status = false;
@@ -115,19 +117,24 @@ namespace CallCenter.Controllers
                     acc.Password = BCrypt.Net.BCrypt.HashPassword(acc.Password);
                     var result = await _accountService.Create(acc);
 
+
+
                     if (result)
                     {
+                        var emailModel = new EmailModel()
+                        {
+                            Content = EmailBody.EmailConfirmStringBody(acc.Email, acc.Token),
+                            Subject = "Mail confirm Api",
+                            To = acc.Email
+                        };
+                        _sendEmailService.SendEmail(emailModel);
+
                         return Ok(new
                         {
-                            Result = result,
-                            MailConfirmToken = acc.Token
+                            Result = result
                         });
                     }
 
-                    return Ok(new
-                    {
-                        Result = result
-                    });
 
                 }
                 return BadRequest(ModelState);
@@ -140,7 +147,7 @@ namespace CallCenter.Controllers
 
         [HttpDelete("delete/{id}")]
         [Produces("application/json")]
-        [Authorize(Roles = "super admin")]
+        //[Authorize(Roles = "super admin")]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -159,7 +166,7 @@ namespace CallCenter.Controllers
         [HttpPut("update")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        [Authorize(Roles = "super admin, admin 1, admin 2, customer")]
+        //[Authorize(Roles = "super admin, admin 1, admin 2, customer")]
         public async Task<IActionResult> Update([FromBody] Account account)
         {
             try
@@ -203,18 +210,18 @@ namespace CallCenter.Controllers
             }
         }
 
-        [HttpGet("mail-confirm/{email}/{token}"), AllowAnonymous]
+        [HttpPost("mail-confirm"), AllowAnonymous]
         [Consumes("application/json")]
         [Produces("application/json")]
-        public async Task<IActionResult> MailConfirm(string email, string token)
+        public async Task<IActionResult> MailConfirm([FromBody] EmailConfirmModel emailConfirmModel)
         {
             try
             {
                 //FE tạo tk => BE trả MailConfirmToken => FE dùng MailConfirmToken + email để tạo mail và gửi active account mail => dẫn tới 1 trang FE khác => trang này call MailConfirm trên BE để active
-                var account = await _accountService.FindByEmailController(email);              
+                var account = await _accountService.FindByEmailController(emailConfirmModel.Email);              
                 if (account != null && account.Status != true)
                 {
-                    if (account.Token == DecodeUrlString(token))
+                    if (account.Token.Equals(emailConfirmModel.Token))
                     {
                         account.Status = true;
                         account.Token = null;
@@ -252,7 +259,6 @@ namespace CallCenter.Controllers
                         {
                             Result = result,
                             Id = account.Id,
-                            Email = account.Email,
                             Token = account.Token,
                             RefreshToken = account.RefreshToken
                         });
@@ -281,10 +287,11 @@ namespace CallCenter.Controllers
                 string token = tokenModel.Token;
                 string refreshToken = tokenModel.RefreshToken;
                 var principal = GetPrincipalFromExpiredToken(token);
-                var email = principal.Identity.Name;
+                var email = principal.FindFirst(ClaimTypes.Email).Value;
+
                 var account = await _accountService.FindByEmailController(email);
 
-                if(account == null || account.RefreshToken != refreshToken || account.RefreshTokenExpireTime.Value.AddDays(1) < DateTime.Now)
+                if (account == null || account.RefreshToken != refreshToken || account.RefreshTokenExpireTime.Value.AddDays(1) < DateTime.Now)
                 {
                     return BadRequest();
                 }
@@ -312,7 +319,7 @@ namespace CallCenter.Controllers
         [HttpPut("change-password")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        [Authorize(Roles = "super admin, admin 1, admin 2, customer")]
+        //[Authorize(Roles = "super admin, admin 1, admin 2, customer")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel changePassword)
         {
             try
@@ -345,17 +352,24 @@ namespace CallCenter.Controllers
         {
             try
             {
-                //FE => forget pass => nhập email => BE ForgetPassword => trả về result + email + token cho FE => FE => gửi mail với đường link đính email + token dẫn tới change password FE => đính password + email + token vào object và gửi nó lên BE ResetPassword
                 var account = await _accountService.FindByEmailController(email);
                 if (account != null && account.DeletedAt == null && account.Status == true)
                 {
                     account.ResetPasswordToken = CreateToken("password");
-                    account.RefreshTokenExpireTime = DateTime.Now;
+                    account.RefreshPasswordTime = DateTime.Now;
+
+
+                    var emailModel = new EmailModel()
+                    {
+                        Content = EmailBody.EmailStringBody(email, account.ResetPasswordToken),
+                        Subject = "Reset Password Api",
+                        To = email
+                    };
+                    _sendEmailService.SendEmail(emailModel);
                     return Ok(new
                     {
                         Result = await _accountService.Update(account),
-                        Email = email,
-                        ResetPasswordToken = account.ResetPasswordToken
+                        Message = "Email Sent!"
                     });
                 }
                 return BadRequest("Email does not exist");
@@ -378,11 +392,11 @@ namespace CallCenter.Controllers
                     var account = await _accountService.FindByEmailController(resetPassword.Email);
                     if (account != null && account.DeletedAt == null && account.ResetPasswordToken.Equals(resetPassword.ResetPasswordToken))
                     {
-                        if (account.RefreshTokenExpireTime.Value.AddDays(1) > DateTime.Now)
+                        if (account.RefreshPasswordTime.Value.AddDays(1) > DateTime.Now)
                         {
                             account.Password = BCrypt.Net.BCrypt.HashPassword(resetPassword.Password);
                             account.ResetPasswordToken = null;
-                            account.RefreshTokenExpireTime = null;
+                            account.RefreshPasswordTime = null;
                             return Ok(new
                             {
                                 Result = await _accountService.Update(account)
@@ -453,9 +467,9 @@ namespace CallCenter.Controllers
             //tạo payload
             var identity = new ClaimsIdentity(new Claim[]
             {
-                new Claim(ClaimTypes.Name, account.Email),
                 new Claim(ClaimTypes.Email, account.Email),
-                new Claim(ClaimTypes.Role, account.Role)
+                new Claim(ClaimTypes.Role, account.Role),
+                new Claim(ClaimTypes.Name, account.Username)
             });
 
             //tạo signature

@@ -69,8 +69,8 @@ namespace CallCenter.ServicesImpl
                 Id = e.Id,
                 Name = e.Name,
                 Price = e.Price,
-                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
-                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
+                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
+                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
                 CustomerId = e.CustomerId,
                 CustomerName = e.Customer.Username
             }).ToListAsync();
@@ -83,8 +83,8 @@ namespace CallCenter.ServicesImpl
                 Id = e.Id,
                 Name = e.Name,
                 Price = e.Price,
-                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
-                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
+                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
+                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
                 CustomerId = e.CustomerId,
                 CustomerName = e.Customer.Username
             }).FirstOrDefaultAsync();
@@ -97,8 +97,8 @@ namespace CallCenter.ServicesImpl
                 Id = e.Id,
                 Name = e.Name,
                 Price = e.Price,
-                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
-                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
+                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
+                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
                 CustomerId = e.CustomerId,
                 CustomerName = e.Customer.Username
             }).ToListAsync();

@@ -63,8 +63,8 @@ namespace CallCenter.ServicesImpl
             return await _dbContext.ProductClients.Where(e => e.DeletedAt == null).Select(e => new
             {
                 Id = e.Id,
-                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
-                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
+                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
+                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
                 ClientId = e.ClientId,
                 ClientName = e.Client.Name,
                 ClientPhone = e.Client.Phone,
@@ -81,8 +81,8 @@ namespace CallCenter.ServicesImpl
             return await _dbContext.ProductClients.Where(e => e.DeletedAt == null && e.Id == id).Select(e => new
             {
                 Id = e.Id,
-                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
-                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
+                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
+                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
                 ClientId = e.ClientId,
                 ClientName = e.Client.Name,
                 ClientPhone = e.Client.Phone,
@@ -99,8 +99,8 @@ namespace CallCenter.ServicesImpl
             return await _dbContext.ProductClients.Where(e => e.DeletedAt == null && e.ClientId == id).Select(e => new
             {
                 Id = e.Id,
-                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
-                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
+                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
+                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
                 ClientId = e.ClientId,
                 ClientName = e.Client.Name,
                 ClientPhone = e.Client.Phone,
@@ -117,8 +117,8 @@ namespace CallCenter.ServicesImpl
             return await _dbContext.ProductClients.Where(e => e.DeletedAt == null && e.ProductId == id).Select(e => new
             {
                 Id = e.Id,
-                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
-                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
+                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
+                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
                 ClientId = e.ClientId,
                 ClientName = e.Client.Name,
                 ClientPhone = e.Client.Phone,
@@ -135,8 +135,8 @@ namespace CallCenter.ServicesImpl
             return await _dbContext.ProductClients.Where(e => e.DeletedAt == null && e.Product.Customer.Id == id).Select(e => new
             {
                 Id = e.Id,
-                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
-                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss"):null,
+                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
+                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss"):null,
                 ClientId = e.ClientId,
                 ClientName = e.Client.Name,
                 ClientPhone = e.Client.Phone,

@@ -2,6 +2,7 @@
 using CallCenter.Models;
 using CallCenter.Services;
 using CallCenter.ServicesImpl;
+using CallCenter.Utils.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -13,7 +14,10 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(option =>
+{
+    option.JsonSerializerOptions.Converters.Add(new DateTextConverter());
+});
 builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddDbContext<DatabaseContext>(option => option.UseLazyLoadingProxies().UseSqlServer("Server=LAPTOP-U51ONRLT;Database=CallCenter;user id=sa;password=123456;trusted_connection=true;encrypt=false"));
@@ -62,6 +66,7 @@ builder.Services.AddScoped<IOrderService, OrderServiceImpl>();
 builder.Services.AddScoped<IProductClientService, ProductClientServiceImpl>();
 builder.Services.AddScoped<IProductService, ProductServiceImpl>();
 builder.Services.AddScoped<IServiceService, ServiceServiceImpl>();
+builder.Services.AddScoped<ISendEmailService, SendEmailServiceImpl>();
 
 var app = builder.Build();
 

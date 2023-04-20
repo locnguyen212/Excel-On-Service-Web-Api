@@ -64,8 +64,8 @@ namespace CallCenter.ServicesImpl
             {
                 Id = e.Id,
                 Description = e.Description,                
-                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss") : null,
-                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss") : null,
+                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss") : null,
+                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss") : null,
                 OrderId = e.OrderId,
                 StaffId = e.StaffId,
                 StaffName = e.Staff.Username
@@ -78,8 +78,8 @@ namespace CallCenter.ServicesImpl
             {
                 Id = e.Id,
                 Description = e.Description,               
-                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss") : null,
-                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss") : null,
+                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss") : null,
+                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss") : null,
                 OrderId = e.OrderId,
                 StaffId = e.StaffId,
                 StaffName = e.Staff.Username
@@ -92,8 +92,8 @@ namespace CallCenter.ServicesImpl
             {
                 Id = e.Id,
                 Description = e.Description,              
-                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss") : null,
-                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss") : null,
+                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss") : null,
+                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss") : null,
                 OrderId = e.OrderId,
                 StaffId = e.StaffId,
                 StaffName = e.Staff.Username
@@ -106,8 +106,8 @@ namespace CallCenter.ServicesImpl
             {
                 Id = e.Id,
                 Description = e.Description,               
-                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss") : null,
-                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-ddTHH:mm:ss") : null,
+                CreatedAt = e.CreatedAt.HasValue ? e.CreatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss") : null,
+                UpdatedAt = e.UpdatedAt.HasValue ? e.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss") : null,
                 OrderId = e.OrderId,
                 StaffId = e.StaffId,
                 StaffName = e.Staff.Username

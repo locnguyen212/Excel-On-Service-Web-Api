@@ -2,7 +2,6 @@
 using CallCenter.Utils.UtilModels;
 using MailKit.Net.Smtp;
 using MimeKit;
-using MimeKit.Text;
 
 namespace CallCenter.ServicesImpl
 {
@@ -21,7 +20,7 @@ namespace CallCenter.ServicesImpl
             emailMessage.From.Add(new MailboxAddress("Api mailing", from));
             emailMessage.To.Add(new MailboxAddress(emailModel.To, emailModel.To));
             emailMessage.Subject = emailModel.Subject;
-            emailMessage.Body = new TextPart(TextFormat.Html)
+            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
             {
                 Text = String.Format(emailModel.Content)
             };
@@ -31,7 +30,7 @@ namespace CallCenter.ServicesImpl
                 var port = int.Parse(_configuration["Gmail:Port"]);
                 try
                 {
-                    client.Connect(_configuration["Gmail:Host"], port, true);
+                    client.Connect(_configuration["Gmail:Host"], 465, true);
                     client.Authenticate(_configuration["Gmail:From"], _configuration["Gmail:Password"]);
                     client.Send(emailMessage);
                 }
