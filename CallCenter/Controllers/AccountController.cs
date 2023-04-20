@@ -307,7 +307,8 @@ namespace CallCenter.Controllers
                 {
                     Result = await _accountService.Update(account),
                     Token = newToken,
-                    refreshToken = newRefreshToken
+                    RefreshToken = newRefreshToken,
+                    Id = account.Id
                 });
             }
             catch
