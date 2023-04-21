@@ -20,7 +20,7 @@ builder.Services.AddControllers().AddJsonOptions(option =>
 });
 builder.Services.AddDistributedMemoryCache();
 
-builder.Services.AddDbContext<DatabaseContext>(option => option.UseLazyLoadingProxies().UseSqlServer("Server=LAPTOP-U51ONRLT;Database=CallCenter;user id=sa;password=123456;trusted_connection=true;encrypt=false"));
+builder.Services.AddDbContext<DatabaseContext>(option => option.UseLazyLoadingProxies().UseSqlServer(""));
 
 builder.Services.AddSwaggerGen(options =>
 {
